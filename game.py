@@ -5,49 +5,45 @@
 import random
 
 # graph cave map, rooms, then room numbers that room is connected to
-cave_map = {
-    1: [],
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-    6: [],
-    7: [],
-    8: [],
-    9: [],
-    10: [],
-    11: [],
-    12: [],
-    13: [],
-    14: [],
-    15: [],
-    16: [],
-    17: [],
-    18: [],
-    19: [],
-    20: []
+cave = {
+    1: [2, 5, 8],
+    2: [1, 3, 10],
+    3: [2, 4, 12],
+    4: [3, 5, 14],
+    5: [1, 4, 6],
+    6: [5, 7, 15],
+    7: [6, 8, 17],
+    8: [1, 7, 9],
+    9: [8, 10, 18],
+    10: [2, 9, 11],
+    11: [10, 12, 19],
+    12: [3, 11, 13],
+    13: [12, 14, 20],
+    14: [4, 13, 15],
+    15: [6, 14, 16],
+    16: [15, 17, 20],
+    17: [7, 16, 18],
+    18: [9, 17, 19],
+    19: [11, 18, 20],
+    20: [13, 16, 19]
 }
 
-def game():
-    print("Game time!")
+def check_hazard(player_location, wumpus_location, pit_locations):
+    if player_location == wumpus_location:
+        return "wumpus"
+    if player_location in pit_locations:
+        return "pit"
+    return "safe"
 
-def main():
-    print("Hello, Wumpus!")
+def is_valid_move(current_location, next_room):
+    return next_room in cave[current_location]
 
-    ## Define starting locations
-    player_location = random.randint(1, 20)
-    wumpus_location = random.randint(1, 20)
-
-    ## Prevent Wumpus and player from having same starting spot
-    while wumpus_location == player_location:
-        wumpus_location = random.randint(1, 20)
-
-    pit_locations = random.sample(range(1, 21), 2)  # generates randoms no duplicates, from chatGPT
-    while player_location in pit_locations or wumpus_location in pit_locations:
-        pit_locations = random.sample(range(1, 21), 2)
-
-
-
-
-if __name__ == "__main__":
-    main()
+def generate_locations():
+    player = random.randint(1, 20)
+    wumpus = random.randint(1, 20)
+    while wumpus == player:
+        wumpus = random.randint(1, 20)
+    pits = random.sample(range(1, 21), 2)
+    while player in pits or wumpus in pits:
+        pits = random.sample(range(1, 21), 2)
+    return player, wumpus, pits
