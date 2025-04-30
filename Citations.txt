@@ -6,5 +6,5 @@ I used chatgpt for a few things, here were my prompts:
     Used the entire thing, my base starter file
 2. Take this cave map and double its size to 20 (size of a wumpus cave grid), I gave it a few lines of the graph to add to cause I didn't want to copy it all
     Used the entire graph
-3. How would i generate multiple random numbers from a range in python?
-    It reccomended I use the .sample thing, so I used that for my generating of the pit locations.
+3. How would I generate multiple random numbers from a range in python?
+    It recommended I use the .sample thing, so I used that for my generating of the pit locations.
