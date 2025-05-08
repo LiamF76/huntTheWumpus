@@ -1,4 +1,12 @@
+WHAT WORKS WHAT DOESN'T:
 
+My game works! At least on my machine lol. It plays ok and that's good. My docker implementation and lint
+git actions implementation however, do not. I've iterated on it like 30 times. I tried getting help from chatGPT
+but couldn't wrangle it into what I wanted, and I have hit a wall! That's unfortunate but I think it's more to do
+with this specific project than my ability to make git actions or docker work overall.
+
+
+CITATIONS:
 
 I used chatgpt for a few things, here were my prompts:
 
@@ -71,6 +79,5 @@ COPY . /app
 
 # Set the default command to run your game
 CMD ["python", "game.py"]
-
 
 Done and done!
