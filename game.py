@@ -1,7 +1,3 @@
-## Liam Fogarty
-## DevOps
-## Final Project: Hunt the Wumpus
-
 import random
 
 # graph cave map, rooms, then room numbers that room is connected to
@@ -56,12 +52,60 @@ def generate_locations():
 
     return player, wumpus, pits, bats
 
-# Generate and display game starting positions
-player, wumpus, pits, bats = generate_locations()
+def run_game():
+    player, wumpus, pits, bats = generate_locations()
 
-print("Game Start!")
-print(f"Player starts in room: {player}")
-print(f"Pits are in rooms: {pits}")
-print(f"Wumpus is in room: {wumpus}")
-print(f"Bats are in rooms: {bats}")
+    print("Game Start!")
+    print(f"You are starting in room: {player}")
+    print(f"Pits are in rooms: {pits}")
+    print(f"Wumpus is in room: {wumpus}")
+    print(f"Bats are in rooms: {bats}")
+    print("")
 
+    while True:
+        print(f"You are in room {player}. Connected rooms: {cave[player]}")
+
+        # Wumpus warning if it's in an adjacent room
+        if wumpus in cave[player]:
+            print("It's wumpin time!")
+
+        move = input("Which room do you want to move to? ")
+
+        if not move.isdigit():
+            print("Please enter a valid room number.")
+            continue
+
+        next_room = int(move)
+
+        if not is_valid_move(player, next_room):
+            print("You can't move there! Try a connected room.")
+            continue
+
+        player = next_room
+        hazard = check_hazard(player, wumpus, pits)
+
+        if hazard == "pit":
+            print("You fell into a pit! Game over.")
+            break
+        elif hazard == "wumpus":
+            print("The Wumpus ate you! Game over.")
+            break
+        elif player in bats:
+            new_room = random.randint(1, 20)
+            print(f"A bat grabs you and drops you into room {new_room}!")
+            player = new_room
+            # Re-check for immediate hazard
+            hazard = check_hazard(player, wumpus, pits)
+            if hazard == "pit":
+                print("You fell into a pit after the bat dropped you! Game over.")
+                break
+            elif hazard == "wumpus":
+                print("The Wumpus was waiting in the room the bat dropped you in! Game over.")
+                break
+        else:
+            print("You're safe... for now.")
+        print("")
+
+
+# Run the game
+run_game()
