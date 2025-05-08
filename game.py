@@ -40,10 +40,28 @@ def is_valid_move(current_location, next_room):
 
 def generate_locations():
     player = random.randint(1, 20)
-    wumpus = random.randint(1, 20)
-    while wumpus == player:
-        wumpus = random.randint(1, 20)
-    pits = random.sample(range(1, 21), 2)
-    while player in pits or wumpus in pits:
-        pits = random.sample(range(1, 21), 2)
-    return player, wumpus, pits
+
+    # Generate unique locations for wumpus, pits, bats
+    all_locations = list(range(1, 21))
+    all_locations.remove(player)
+
+    wumpus = random.choice(all_locations)
+    all_locations.remove(wumpus)
+
+    pits = random.sample(all_locations, 2)
+    for pit in pits:
+        all_locations.remove(pit)
+
+    bats = random.sample(all_locations, 2)
+
+    return player, wumpus, pits, bats
+
+# Generate and display game starting positions
+player, wumpus, pits, bats = generate_locations()
+
+print("Game Start!")
+print(f"Player starts in room: {player}")
+print(f"Pits are in rooms: {pits}")
+print(f"Wumpus is in room: {wumpus}")
+print(f"Bats are in rooms: {bats}")
+
